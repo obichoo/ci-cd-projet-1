@@ -10,6 +10,12 @@ pipeline {
             steps {
                 script {
                     sh '''
+                    #!/bin/bash
+                    # Nettoyer le répertoire s'il existe déjà
+                    if [ -d "${IMAGE_NAME}" ]; then
+                        rm -rf ${IMAGE_NAME}
+                    fi
+                    
                     git clone https://github.com/${ID_GIT}/${IMAGE_NAME}.git
                     cd ${IMAGE_NAME}
 
