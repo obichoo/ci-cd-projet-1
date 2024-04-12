@@ -20,7 +20,7 @@ pipeline {
                     git clone https://github.com/${ID_GIT}/${IMAGE_NAME}.git
                     cd ${IMAGE_NAME}
 
-                    docker build -t $IMAGE_NAME:$IMAGE_TAG .
+                    docker build -t ${ID_DOCKERHUB}/${IMAGE_NAME}:${IMAGE_TAG} .
                     '''
                 }
             }
@@ -28,7 +28,10 @@ pipeline {
         stage('Test') {
             steps {
                 script {
-                    sh 'docker run -d -p 80:5000 -e PORT=5000 --name ${IMAGE_NAME} ${ID_DOCKERHUB}/${IMAGE_NAME}:${IMAGE_TAG}'
+                    sh '''
+                        docker run -d -p 80:5000 -e PORT=5000 --name ${IMAGE_NAME} ${ID_DOCKERHUB}/${IMAGE_NAME}:${IMAGE_TAG}
+                        curl http://172.17.0.1:80 | grep -q "Hello world!"
+                    '''
                 }
             }
         }
