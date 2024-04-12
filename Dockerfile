@@ -7,5 +7,5 @@ COPY . /usr/share/nginx/html
 # Exposer le port 80 pour permettre l'accès au serveur web
 EXPOSE 80
 
-# La commande CMD pour démarrer nginx lorsque le conteneur est lancé
+# La commande CMD pour démarrer nginx lorsque le conteneur est lancé 
 CMD ["nginx", "-g", "daemon off;"]
