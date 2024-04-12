@@ -9,7 +9,7 @@ pipeline {
             steps {
                 script {
                     // Building the Docker image
-                    sh 'sudo docker build -t $IMAGE_NAME:$IMAGE_TAG .'
+                    //sh 'sudo docker build -t $IMAGE_NAME:$IMAGE_TAG .'
                 }
             }
         }
