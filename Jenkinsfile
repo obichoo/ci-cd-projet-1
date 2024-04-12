@@ -8,6 +8,9 @@ pipeline {
         stage('Build') {
             steps {
                 script {
+                     def user = env.BUILD_USER
+                    def userId = env.BUILD_USER_ID
+                    echo "Build initiated by: ${user} (ID: ${userId})"
                     // Building the Docker image
                     sh 'docker build -t $IMAGE_NAME:$IMAGE_TAG .'
                 }
