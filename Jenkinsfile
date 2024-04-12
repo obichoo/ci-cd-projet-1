@@ -15,7 +15,7 @@ pipeline {
                     if [ -d "${IMAGE_NAME}" ]; then
                         rm -rf ${IMAGE_NAME}
                     fi
-                    
+
                     git clone https://github.com/${ID_GIT}/${IMAGE_NAME}.git
                     cd ${IMAGE_NAME}
 
@@ -27,7 +27,7 @@ pipeline {
         stage('Test') {
             steps {
                 script {
-                    sh 'docker run $IMAGE_NAME:$IMAGE_TAG'
+                    sh 'docker run $IMAGE_NAME:$IMAGE_TAG -d -p 80:5000 -e PORT=5000 --name ${IMAGE_NAME} ${ID_DOCKERHUB}/${IMAGE_NAME}:${IMAGE_TAG}'
                 }
             }
         }
