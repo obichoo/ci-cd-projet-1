@@ -1,25 +1,21 @@
+# Utiliser une image de base légère
+FROM node:14-alpine
 
-#Grab the latest alpine image
-FROM --platform=linux/amd64 python:3.13.0a2-alpine
+# Définir le répertoire de travail dans le conteneur
+WORKDIR /app
 
-# Install python and pip
-RUN apk add --no-cache --update python3 py3-pip bash
-ADD ./webapp/requirements.txt /tmp/requirements.txt
+# Copier les fichiers de package.json et package-lock.json
+COPY package*.json ./
 
-# Install dependencies
-RUN pip3 install --no-cache-dir -q -r /tmp/requirements.txt
+# Installer les dépendances
+RUN npm install
 
-# Add our code
-ADD ./webapp /opt/webapp/
-WORKDIR /opt/webapp
+# Copier tous les autres fichiers nécessaires du répertoire courant dans le conteneur
+COPY . .
 
-# Expose is NOT supported by Heroku
-# EXPOSE 5000 		
+# Exposer le port sur lequel l'application sera accessible
+# Render assigne le port via la variable d'environnement $PORT
+EXPOSE $PORT
 
-# Run the image as a non-root user
-RUN adduser -D myuser
-USER myuser
-
-# Run the app.  CMD is required to run on Heroku
-# $PORT is set by Heroku			
-CMD gunicorn --bind 0.0.0.0:$PORT wsgi
+# Définir la commande pour démarrer l'application
+CMD ["npm", "start"]
