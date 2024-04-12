@@ -2,6 +2,7 @@ pipeline {
     agent any
     environment {
         ID_GIT = 'obichoo'
+        ID_DOCKERHUB = 'obichooooo'
         IMAGE_NAME = 'ci-cd-projet-1'
         IMAGE_TAG = 'latest'
     }
@@ -27,7 +28,7 @@ pipeline {
         stage('Test') {
             steps {
                 script {
-                    sh 'docker run $IMAGE_NAME:$IMAGE_TAG -d -p 80:5000 -e PORT=5000 --name ${IMAGE_NAME} ${ID_DOCKERHUB}/${IMAGE_NAME}:${IMAGE_TAG}'
+                    sh 'docker run -d -p 80:5000 -e PORT=5000 --name ${IMAGE_NAME} ${ID_DOCKERHUB}/${IMAGE_NAME}:${IMAGE_TAG}'
                 }
             }
         }
