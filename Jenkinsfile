@@ -9,22 +9,22 @@ pipeline {
             steps {
                 script {
                     // Building the Docker image
-                    sh 'docker build -t $IMAGE_NAME:$IMAGE_TAG .'
+                    sh 'sudo docker build -t $IMAGE_NAME:$IMAGE_TAG .'
                 }
             }
         }
-        // stage('Push to Docker Hub') {
-        //     steps {
-        //         script {
-        //             // Logging into Docker Hub
-        //             withCredentials([usernamePassword(credentialsId: 'dockerhub', usernameVariable: 'DOCKERHUB_USERNAME', passwordVariable: 'DOCKERHUB_PASSWORD')]) {
-        //                 sh 'echo $DOCKERHUB_PASSWORD | docker login -u $DOCKERHUB_USERNAME --password-stdin'
-        //             }
-        //             // Pushing the image to Docker Hub
-        //             sh 'docker push $IMAGE_NAME:$IMAGE_TAG'
-        //         }
-        //     }
-        // }
+         stage('Push to Docker Hub') {
+             steps {
+                 script {
+                     // Logging into Docker Hub
+                     withCredentials([usernamePassword(credentialsId: 'dockerhub', usernameVariable: 'DOCKERHUB_USERNAME', passwordVariable: 'DOCKERHUB_PASSWORD')]) {
+                         sh 'echo $DOCKERHUB_PASSWORD | docker login -u $DOCKERHUB_USERNAME --password-stdin'
+                     }
+                     // Pushing the image to Docker Hub
+                     sh 'docker push $IMAGE_NAME:$IMAGE_TAG'
+                 }
+             }
+         }
     }
     post {
         always {
