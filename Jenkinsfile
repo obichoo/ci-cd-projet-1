@@ -35,8 +35,8 @@ pipeline {
                 script {
                     sh '''
 
-                        docker run -d -p 80:5000 -e PORT=5000 --name ${IMAGE_NAME} ${ID_DOCKERHUB}/${IMAGE_NAME}:${IMAGE_TAG}
-                        sleep 5
+                        docker run -d -p 80:5000 -e PORT=80 --name ${IMAGE_NAME} ${ID_DOCKERHUB}/${IMAGE_NAME}:${IMAGE_TAG}
+                        sleep 10
                         curl http://172.17.0.1:80 | grep -q "Hello world!"
                         docker stop ${IMAGE_NAME}
                         docker rm ${IMAGE_NAME}
