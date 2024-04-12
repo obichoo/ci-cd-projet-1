@@ -1,36 +1,27 @@
 pipeline {
     agent any
     environment {
-        DOCKERHUB_CREDENTIALS_ID = 'DH_token'
+        IMAGE_NAME = 'yourusername/yourimagename'
+        IMAGE_TAG = 'latest'
     }
     stages {
         stage('Build') {
             steps {
                 script {
-                    sh 'docker build -t myapp:${BUILD_ID} .'
+                    // Building the Docker image
+                    sh 'docker build -t $IMAGE_NAME:$IMAGE_TAG .'
                 }
             }
         }
-        stage('Test') {
+        stage('Push to Docker Hub') {
             steps {
                 script {
-                    sh 'echo "Running tests"'
-                }
-            }
-        }
-        stage('Publish Artifact') {
-            steps {
-                script {
-                    docker.withRegistry('https://index.docker.io/v1/', DOCKERHUB_CREDENTIALS_ID) {
-                        sh "docker push myapp:${BUILD_ID}"
+                    // Logging into Docker Hub
+                    withCredentials([usernamePassword(credentialsId: 'DH_token', usernameVariable: 'DOCKERHUB_USERNAME', passwordVariable: 'DOCKERHUB_PASSWORD')]) {
+                        sh 'echo $DOCKERHUB_PASSWORD | docker login -u $DOCKERHUB_USERNAME --password-stdin'
                     }
-                }
-            }
-        }
-        stage('Deploy') {
-            steps {
-                script {
-                    sh 'echo "Deploying application"'
+                    // Pushing the image to Docker Hub
+                    sh 'docker push $IMAGE_NAME:$IMAGE_TAG'
                 }
             }
         }
