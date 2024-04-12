@@ -1,7 +1,7 @@
 pipeline {
     agent any
     environment {
-        IMAGE_NAME = 'yourusername/yourimagename'
+        IMAGE_NAME = 'ryanprt/proj1'
         IMAGE_TAG = 'latest'
     }
     stages {
