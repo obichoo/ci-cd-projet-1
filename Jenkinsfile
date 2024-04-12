@@ -1,7 +1,7 @@
 pipeline {
     agent any
     environment {
-        DOCKERHUB_CREDENTIALS_ID = 'id-for-dockerhub-credentials'
+        DOCKERHUB_CREDENTIALS_ID = 'DH_token'
     }
     stages {
         stage('Build') {
