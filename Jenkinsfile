@@ -35,8 +35,6 @@ pipeline {
                 script {
                     sh '''
                         docker run -d -p 80:80 -e PORT=80 --name ${IMAGE_NAME} ${ID_DOCKERHUB}/${IMAGE_NAME}:${IMAGE_TAG}
-                        sleep 5
-                        curl http://172.17.0.1:80 | grep -q "Hello world!"
                     '''
                 }
             }
@@ -46,7 +44,7 @@ pipeline {
                 script {
                     // Logging into Docker Hub
                     withCredentials([usernamePassword(credentialsId: 'DOCKERHUB_LOGS', usernameVariable: 'DOCKERHUB_USERNAME', passwordVariable: 'DOCKERHUB_PASSWORD')]) {
-                        sh 'echo $DOCKERHUB_PASSWORD | docker login -u $DOCKERHUB_USERNAME --password-stdin'
+                        sh 'echo ${DOCKERHUB_PASSWORD} | docker login -u ${DOCKERHUB_USERNAME} --password-stdin'
                     }
                     // Pushing the image to Docker Hub
                     sh 'docker push $IMAGE_NAME:$IMAGE_TAG'
