@@ -35,7 +35,7 @@ pipeline {
                 script {
                     sh '''
                         docker run -d -p 80:80 -e PORT=80 --name ${IMAGE_NAME} ${ID_DOCKERHUB}/${IMAGE_NAME}:${IMAGE_TAG}
-                        docker wait ${IMAGE_NAME}
+                        sleep 5
                         curl http://localhost:80 | grep -q "Hello world!"
                     '''
                 }
