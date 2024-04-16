@@ -5,6 +5,7 @@ pipeline {
         ID_DOCKERHUB = 'obichooooo'
         IMAGE_NAME = 'ci-cd-projet-1'
         IMAGE_TAG = 'latest'
+        USER_MAIL = '${MAIL_TO}'
     }
     stages {
         stage('Build') {
@@ -63,9 +64,9 @@ pipeline {
     }
     post {
         always {
-            mail to: '${MAIL_TO}',
-                 subject: "Build ${currentBuild.currentResult}: Job ${env.JOB_NAME}",
-                 body: "Check Jenkins for details. Build number: ${env.BUILD_NUMBER}"
+            mail to: "${USER_MAIL}",
+                subject: "Build ${currentBuild.currentResult}: Job ${env.JOB_NAME}",
+                body: "Check Jenkins for details. Build number: ${env.BUILD_NUMBER}"
         }
     }
 }
