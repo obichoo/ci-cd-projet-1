@@ -63,7 +63,7 @@ pipeline {
     }
     post {
         always {
-            mail to: 'ryan.peyrot@gmail.com',
+            mail to: 'aolivrie77@gmail.com',
                 //  subject: "Build ${currentBuild.currentResult}: Job ${env.JOB_NAME}",
                 //  body: "Check Jenkins for details. Build number: ${env.BUILD_NUMBER}"
                 subject: 'Build jenkins et tout',
