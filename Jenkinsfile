@@ -5,7 +5,7 @@ pipeline {
         ID_DOCKERHUB = 'obichooooo'
         IMAGE_NAME = 'ci-cd-projet-1'
         IMAGE_TAG = 'latest'
-        USER_MAIL = '${MAIL_TO}'
+        USER_MAIL = "${MAIL_TO}"
     }
     stages {
         stage('Build') {
