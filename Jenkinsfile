@@ -17,17 +17,12 @@ pipeline {
                     # Nettoyer le répertoire s'il existe déjà
                     if [ -d "${IMAGE_NAME}" ]; then
                         rm -rf ${IMAGE_NAME}
-
                     fi
+
                     if [ "$(docker ps -q -f name=${IMAGE_NAME})" ]; then
                         docker stop ${IMAGE_NAME} || true
                         docker rm ${IMAGE_NAME} || true
                     fi
-
-                    git clone https://github.com/${ID_GIT}/${IMAGE_NAME}.git
-                    cd ${IMAGE_NAME}
-
-                    docker build -t ${ID_DOCKERHUB}/${IMAGE_NAME}:${IMAGE_TAG} .
                     '''
                 }
             }
