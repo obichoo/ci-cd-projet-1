@@ -18,10 +18,10 @@ pipeline {
                     if [ -d "${IMAGE_NAME}" ]; then
                         rm -rf ${IMAGE_NAME}
 
-                        if [ "$(docker ps -q -f name=${IMAGE_NAME})" ]; then
-                            docker stop ${IMAGE_NAME} || true
-                            docker rm ${IMAGE_NAME} || true
-                        fi
+                    fi
+                    if [ "$(docker ps -q -f name=${IMAGE_NAME})" ]; then
+                        docker stop ${IMAGE_NAME} || true
+                        docker rm ${IMAGE_NAME} || true
                     fi
 
                     git clone https://github.com/${ID_GIT}/${IMAGE_NAME}.git
