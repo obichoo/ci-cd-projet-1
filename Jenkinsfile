@@ -19,10 +19,7 @@ pipeline {
                         rm -rf ${IMAGE_NAME}
                     fi
 
-                    if [ "$(docker ps -q -f name=${IMAGE_NAME})" ]; then
-                        docker stop ${IMAGE_NAME} || true
-                        docker rm ${IMAGE_NAME} || true
-                    fi
+                    docker rm -f ${IMAGE_NAME} || true
                     '''
                 }
             }
