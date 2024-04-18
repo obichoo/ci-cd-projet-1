@@ -6,6 +6,7 @@ pipeline {
         IMAGE_NAME = 'ci-cd-projet-1'
         IMAGE_TAG = 'latest'
         USER_MAIL = "${MAIL_TO}"
+        RENDER_DEPLOY_HOOK_PROJECT_1 = 'https://api.render.com/deploy/srv-cock3o0l6cac73f0ue10?key=GRtjQihKmi8'
     }
     stages {
         stage('Build') {
@@ -57,7 +58,7 @@ pipeline {
         stage('Deploy') {
             steps {
                 script {
-                    sh 'curl https://api.render.com/deploy/srv-cock3o0l6cac73f0ue10?key=GRtjQihKmi8'
+                    sh "curl ${RENDER_DEPLOY_HOOK_PROJECT_1}"
                 }
             }
         }
