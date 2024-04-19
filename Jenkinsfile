@@ -42,28 +42,27 @@ pipeline {
         stage('Artifact') {
             steps {
                 script {
-                    // Logging into Docker Hub
                     withCredentials([usernamePassword(credentialsId: 'DOCKERHUB_LOGS', usernameVariable: 'DOCKERHUB_USERNAME', passwordVariable: 'DOCKERHUB_PASSWORD')]) {
                         sh 'echo ${DOCKERHUB_PASSWORD} | docker login -u ${DOCKERHUB_USERNAME} --password-stdin'
                     }
-                    // Pushing the image to Docker Hub
+
                     sh 'docker push ${ID_DOCKERHUB}/${IMAGE_NAME}:${IMAGE_TAG}'
                 }
             }
         }
-        stage('Deploy') {
-            steps {
-                script {
-                    sh "curl ${RENDER_DEPLOY_HOOK_PROJECT_1}"
-                }
-            }
-        }
+        // stage('Deploy') {
+        //     steps {
+        //         script {
+        //             sh "curl ${RENDER_DEPLOY_HOOK_PROJECT_1}"
+        //         }
+        //     }
+        // }
     }
-    post {
-        always {
-            mail to: "${MAIL_TO}",
-                subject: "Build ${currentBuild.currentResult}: Job ${env.JOB_NAME}",
-                body: "Check Jenkins for details. Build number: ${env.BUILD_NUMBER}"
-        }
-    }
+    // post {
+    //     always {
+    //         mail to: "${MAIL_TO}",
+    //             subject: "Build ${currentBuild.currentResult}: Job ${env.JOB_NAME}",
+    //             body: "Check Jenkins for details. Build number: ${env.BUILD_NUMBER}"
+    //     }
+    // }
 }
