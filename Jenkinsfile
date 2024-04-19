@@ -19,6 +19,11 @@ pipeline {
                     fi
 
                     docker rm -f ${IMAGE_NAME} || true
+
+                    git clone https://github.com/${ID_GIT}/${IMAGE_NAME}.git
+                    cd ${IMAGE_NAME}
+
+                    docker build -t ${ID_DOCKERHUB}/${IMAGE_NAME}:${IMAGE_TAG} .
                     '''
                 }
             }
