@@ -5,7 +5,6 @@ pipeline {
         ID_DOCKERHUB = 'obichooooo'
         IMAGE_NAME = 'ci-cd-projet-1'
         IMAGE_TAG = 'latest'
-        USER_MAIL = "${MAIL_TO}"
         RENDER_DEPLOY_HOOK_PROJECT_1 = 'https://api.render.com/deploy/srv-cock3o0l6cac73f0ue10?key=GRtjQihKmi8'
     }
     stages {
@@ -57,7 +56,7 @@ pipeline {
     }
     post {
         always {
-            mail to: "${USER_MAIL}",
+            mail to: "${MAIL_TO}",
                 subject: "Build ${currentBuild.currentResult}: Job ${env.JOB_NAME}",
                 body: "Check Jenkins for details. Build number: ${env.BUILD_NUMBER}"
         }
